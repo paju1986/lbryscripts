@@ -12,17 +12,17 @@ with os.scandir(path) as entries:
                 "name": fileNameNoExtension,
                 "bid": "0.1",
                 "file_path": path + "/" + entry.name,
-                "validate_file": "false",
-                "optimize_file": "false",
+                "validate_file": False,
+                "optimize_file": False,
                 "tags": [],
                 "languages": [],
                 "locations": [],
-                "channel_id": "9e2e0f84a68146c0d13184cbf4ec3c7f4bdd1028",
+                "channel_id": "",
                 "funding_account_ids": [],
-                "preview": "false",
-                "preview": "false",
-                "blocking": "true"
+                "preview": False,
+                "blocking": False
                 }
         }
-        print(json.dumps(params))
-        requests.post("http://localhost:5279/",json.dumps(params)).json()
+        #print(json.dumps(params))
+        print(requests.post("http://localhost:5279/",json.dumps(params)).json())
+ 
