@@ -22,8 +22,8 @@ def createAutometedThumb(path,fileName,fileNameNoExtension):
 
 channelId = ""
 #command line arguments processing
-short_options = "gc:"
-long_options = ["createGif","channel_id="]
+short_options = "gc:p:"
+long_options = ["createGif","channel_id=","price="]
 argument_list = sys.argv[1:]
 try:
     arguments, values = getopt.getopt(argument_list, short_options, long_options)
@@ -34,12 +34,12 @@ except getopt.error as err:
     sys.exit(2)
     
 for current_argument, current_value in arguments:
-    print(current_argument)
     if current_argument in ("-g", "--createGif"):
         createGif = True
     elif current_argument in ("-c", "--channel_id"):
-        print(current_value)
         channelId = current_value
+    elif current_argument in ("-p", "--price"):
+        price = current_value
 
 #scan current directory
 path = os.getcwd()
@@ -93,6 +93,9 @@ with os.scandir(path) as entries:
             }
             if(len(channelId) != 0):
                 params["params"]["channel_id"] = channelId
+            if(len(price) != 0):
+                params["params"]["fee_currency"] = "lbc"
+                params["params"]["fee_amount"] = price
             print("Uploading file with parameters: " + json.dumps(params) + "\n")
             reqResult = requests.post("http://localhost:5279/",json.dumps(params))
             if reqResult.status_code == 200:
