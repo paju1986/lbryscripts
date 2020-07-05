@@ -23,7 +23,7 @@ def createAutometedThumb(path,fileName,fileNameNoExtension):
 channelId = ""
 #command line arguments processing
 short_options = "gc:p:t:"
-long_options = ["createGif","channel_id=","price=","tags"]
+long_options = ["createGif","channel_id=","price=","tags="]
 argument_list = sys.argv[1:]
 try:
     arguments, values = getopt.getopt(argument_list, short_options, long_options)
@@ -100,7 +100,7 @@ with os.scandir(path) as entries:
             if(len(tags) != 0):
                 params["params"]["tags"] = tags
             print("Uploading file with parameters: " + json.dumps(params) + "\n")
-            reqResult = requests.post("http://localhost:5279/",json.dumps(params))channelId
+            reqResult = requests.post("http://localhost:5279/",json.dumps(params))
             if reqResult.status_code == 200:
                 returnJson = reqResult.json()
                 print("Finish uploading file, result json: " + json.dumps(returnJson) + "\n")
