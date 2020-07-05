@@ -22,8 +22,8 @@ def createAutometedThumb(path,fileName,fileNameNoExtension):
 
 channelId = ""
 #command line arguments processing
-short_options = "gc:p:"
-long_options = ["createGif","channel_id=","price="]
+short_options = "gc:p:t:"
+long_options = ["createGif","channel_id=","price=","tags"]
 argument_list = sys.argv[1:]
 try:
     arguments, values = getopt.getopt(argument_list, short_options, long_options)
@@ -40,7 +40,8 @@ for current_argument, current_value in arguments:
         channelId = current_value
     elif current_argument in ("-p", "--price"):
         price = current_value
-
+    elif current_argument in ("-t", "--tags"):
+        tags = current_value.split(",")
 #scan current directory
 path = os.getcwd()
 with os.scandir(path) as entries:
@@ -96,8 +97,10 @@ with os.scandir(path) as entries:
             if(len(price) != 0):
                 params["params"]["fee_currency"] = "lbc"
                 params["params"]["fee_amount"] = price
+            if(len(tags) != 0):
+                params["params"]["tags"] = tags
             print("Uploading file with parameters: " + json.dumps(params) + "\n")
-            reqResult = requests.post("http://localhost:5279/",json.dumps(params))
+            reqResult = requests.post("http://localhost:5279/",json.dumps(params))channelId
             if reqResult.status_code == 200:
                 returnJson = reqResult.json()
                 print("Finish uploading file, result json: " + json.dumps(returnJson) + "\n")
