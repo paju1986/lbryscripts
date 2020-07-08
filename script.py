@@ -21,6 +21,8 @@ def createAutometedThumb(path,fileName,fileNameNoExtension):
     return thumbName
 
 channelId = ""
+price = ""
+extExclude = []
 #command line arguments processing
 short_options = "gc:p:t:e:"
 long_options = ["createGif","channel_id=","price=","tags=","exclude="]
